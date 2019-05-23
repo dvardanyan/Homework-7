@@ -1,0 +1,58 @@
+class Account {
+	constructor(id, name, balance) {
+		this.id = id;
+		this.name = name;
+		this.balance = balance
+	}
+
+	static identifyAccounts(a, b) {
+		for(let key in a) {
+			if(a[key] != b[key]) {
+				return `${a.name} and ${b.name} are different.`;
+			}
+		}
+		return `${a.name} and ${b.name} are equal.`;
+	}
+
+	get id() {
+		return this.id;
+	}
+
+	get name() {
+		return this.name;
+	}	
+	set name(value) {
+		this.name = value;
+	}
+
+	get balance() {
+		return this.balance;
+	}
+	set balance(value) {
+		this.balance  = value;
+	}
+
+	credit(amount) {
+		if(amount <= 0 || isNaN(amount)) {
+			throw new Error("Please enter your number");
+		}
+		this.balance += amount;
+		return this.balance;
+	}
+
+	debit(amount) {
+		if(amount > this.balance) return "Out of money";
+		this.balance -= amount;
+		return amount;
+	}
+
+	transferTo(acc, amount) {
+		if(amount > this.balance) return "Out of money";
+		acc.credit(this.debit(amount));
+		return this.balance;
+	}
+
+	toString() {
+		return `id: ${this.id}, name: ${this.name}, balance: ${this.balance}`;
+}
+}
